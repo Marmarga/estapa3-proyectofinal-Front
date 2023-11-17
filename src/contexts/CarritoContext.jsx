@@ -4,7 +4,7 @@ import { post } from "../../utils/http";
 
 const CarritoContext = createContext()
 
-const url = 'http://localhost:8082/carrito/'
+const url = 'https://etapa3-proyectofinal.onrender.com/api/carritos/'
 
 
 const CarritoProvider = ( { children} ) => {
