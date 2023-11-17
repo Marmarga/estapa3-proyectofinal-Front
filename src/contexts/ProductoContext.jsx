@@ -34,16 +34,14 @@ const ProductoProvider = ( { children } ) => {
     }   
     const actualizarProductoContext = async (productoEditar) => {
     try {
-        const productoEditado = await put(url, productoEditar._id, productoEditar)
-        console.log(productoEditado)
-        const nuevaDB = productos.map( producto => {
-            if ( producto._id === productoEditar._id ) {
-                return productoEditar
-            } else {
-                return producto
-            }
-        })
-            console.log(nuevaDB)
+        const productoEditado = await put(url, productoEditar.id, productoEditar)
+        const nuevaDB = productos.map ( producto => producto.id === productoEditado.id ? productoEditado : producto)        //const nuevaDB = productos.map( producto => {
+           // if ( producto.id === productoEditar.id ) {
+             //   return productoEditar
+           // } else {
+              //  return producto
+           // }
+       // })
             setProductos(nuevaDB)
     } catch (error) {
         console.log('ERROR en actualizarProductoContext', error)
@@ -53,7 +51,7 @@ const ProductoProvider = ( { children } ) => {
         try {
             const productoEliminado = await del(url, id)
             console.log(productoEliminado) // {}
-            const nuevaDB = productos.filter(producto => producto._id !== id)
+            const nuevaDB = productos.filter(producto => producto.id !== id)
             setProductos(nuevaDB)
         } catch (error) {
             console.log('Todo salió mal en el eliminarProductoContext', error)
