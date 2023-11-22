@@ -4,8 +4,8 @@ import { del, get, post, put } from "../../utils/http";
 
 const ProductoContext = createContext()
 
-//const url = 'https://etapa3-proyectofinal.onrender.com/api/productos/'
-const url = 'http://localhost:8082/api/productos'
+const url = 'https://etapa3-proyectofinal.onrender.com/api/productos/'
+//const url = 'http://localhost:8082/api/productos'
 
 const ProductoProvider = ( { children } ) => {
     const [productos, setProductos] = useState(null)

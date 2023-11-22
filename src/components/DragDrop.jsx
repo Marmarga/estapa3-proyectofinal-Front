@@ -61,7 +61,8 @@ const DragDrop = ({ setFoto, setSrcImagen, srcImagen }) => {
 
        try {        
         fomrData.append('foto', file)
-        const imagenUp = await post('http://localhost:8082/api/upload', fomrData)
+        const imagenUp = await post('https://etapa3-proyectofinal.onrender.com/api/upload', fomrData)
+       // const imagenUp = await post('http://localhost:8082/api/upload', fomrData)
         setFoto(imagenUp)
        } catch (error) {
         console.error('[uploadFile]:', error)
