@@ -13,11 +13,10 @@ const TablaFila = ( { producto, setProductoAEditar } ) => {
         title: `¿Estas seguro de querer eliminar este producto ${producto.nombre}?`,
         text: '¿Quieres hacerlo?',
         icon: 'pregunta',
-        confirmButtonText: 'Cool',
         showCancelButton: true,
         confirmButtonColor: " #E3BDEE",
         cancelButtonColor: "#808080",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Si, eliminar!"
       })
 
       if(isDelete.isConfirmed){
