@@ -16,12 +16,25 @@ export const get = async (url) => {
 
 }
 export const post = async (url, dato) => { 
-    try {
-        const config = {
-            method: 'POST',
-            headers: { 'content-type': 'application/json'},
-            body: JSON.stringify(dato)
+    
+    let config = {}
+
+    try {        
+
+        if ( dato instanceof FormData) {
+            config = {
+                method: 'POST',
+                body: dato
+            }
+        } else {
+            config = {
+                method: 'POST',
+                headers: { 'content-type': 'application/json'},
+                body: JSON.stringify(dato)
+            }           
         }
+
+       
         const respuesta = await fetch(url, config)
         if ( !respuesta.ok ) {
             throw new Error(`Algo paso: ${respuesta.status}, ${respuesta.statusText}`)

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import ProductoContext from '../contexts/ProductoContext'
 import { useForm } from '../hooks/useForm'
 import './Formulario.scss'
+import DragDrop from './DragDrop'
 
 
 
@@ -19,11 +20,21 @@ const formInicial = {
     envio: false,
   }
   const Formulario = ({ productoAEditar, setProductoAEditar}) => {
+    const [foto, setFoto] = useState ('')
+    const [srcImagen, setSrcImagen] = useState ('')
+
     const [form, setForm, handleChange] = useForm(formInicial)
     const { crearProductoContext, actualizarProductoContext } = useContext(ProductoContext)
  
     useEffect(() => {
-      productoAEditar ? setForm(productoAEditar) : setForm(formInicial)
+      if ( productoAEditar ){
+        setSrcImagen(productoAEditar.foto)
+        setForm(productoAEditar)
+      }else {
+        setForm(formInicial)
+      }
+
+      //productoAEditar ? setForm(productoAEditar) : setForm(formInicial)
     }, [productoAEditar, setProductoAEditar])
   
   
@@ -31,9 +42,11 @@ const formInicial = {
       e.preventDefault() 
       try {
         if ( form.id === null ) {
-          await crearProductoContext(form)
+          const productoNuevo = {...form, ...foto}
+          await crearProductoContext(productoNuevo)
         } else {
-          await actualizarProductoContext(form)
+          const productoEditado = {...form, ...foto}
+          await actualizarProductoContext(productoEditado)
         }
         handleReset()
       } catch (error) {
@@ -45,6 +58,7 @@ const formInicial = {
     const handleReset = ()  => {
       setForm(formInicial)
       setProductoAEditar(null)
+      setSrcImagen('')
     }
 
     return (
@@ -77,15 +91,21 @@ const formInicial = {
             <label htmlFor="lbl-detalles">Detalles:</label>
             <input type="text" name="detalles" id="lbl-detalles" value={form.detalles} onChange={handleChange} />
           </div>
-          <div className='label'>
+         {/* <div className='label'>
             <label htmlFor="lbl-foto">Foto:</label>
             <input type="text" name="foto" id="lbl-foto" value={form.foto} onChange={handleChange} />
-          </div>
+          </div>*/}
+
+          <DragDrop 
+            setFoto={setFoto} 
+            setSrcImagen={setSrcImagen} 
+            srcImagen={srcImagen}/>
+
           <div className='label'>
             <label htmlFor="lbl-envio">Envío:</label>
             <input type="checkbox" name="envio" id="lbl-envio" checked={form.envio} onChange={handleChange} />
-          </div>
-  
+           </div> 
+             
           <button className='label__formGuardar' type="submit">Guardar</button>
           <button className='label__formLimpiar' type="reset" onClick={handleReset}>Limpiar</button>
         </form>
